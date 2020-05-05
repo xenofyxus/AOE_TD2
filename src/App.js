@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import {
+    Switch,
+    Route,
+} from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import HeaderNav from './Presentational/HeaderNav'
+import HomeContainer from './Container/Home/HomeContainer';
+import InfoContainer from './Container/Info/InfoContainer';
+import GameContainer from './Container/Game/GameContainer';
+
+// App layout
+export default class App extends Component{
+    constructor(){
+        super();
+    }
+
+    render(){
+        return(
+        <div id="root">
+            <HeaderNav/>    
+            <Switch>    
+                <Route exact path="/">
+                    <HomeContainer/>
+                </Route>
+                <Route path="/info">
+                    <InfoContainer/>
+                </Route>
+                <Route path="/game">
+                    <GameContainer/>
+                </Route>
+            </Switch>
+        </div>
+        );
+    }
 }
-
-export default App;
