@@ -6,7 +6,7 @@ import { applyMiddleware, createStore, compose} from 'redux';
 import { Provider } from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom'
 import firebase from 'firebase'
-
+import {firebaseConfig} from './firebase.config'
 import rootReducer from './Reducers/rootReducer';
 import App from './App.js'
 
