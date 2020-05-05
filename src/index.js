@@ -10,16 +10,7 @@ import firebase from 'firebase'
 import rootReducer from './Reducers/rootReducer';
 import App from './App.js'
 
-const firebaseConfig = {
-    apiKey: "AIzaSyA7f7fxam1706hc-m5BANkGpyRscMp5qGk",
-    authDomain: "aoe-td2.firebaseapp.com",
-    databaseURL: "https://aoe-td2.firebaseio.com",
-    projectId: "aoe-td2",
-    storageBucket: "aoe-td2.appspot.com",
-    messagingSenderId: "620222783730",
-    appId: "1:620222783730:web:bb5f7aafb8b8a733e2306b",
-    measurementId: "G-LPSS6G7YM3"
-  };
+
 firebase.initializeApp(firebaseConfig);
 
 const initialState = {};
