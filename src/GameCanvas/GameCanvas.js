@@ -5,7 +5,8 @@ export default class GameCanvas extends React.Component{
     constructor(props) {
         super(props);
         this.handleMouseMove = this.handleMouseMove.bind(this);
-
+        this.handleDrop = this.handleDrop.bind(this);
+        this.handleDragStart = this.handleDragStart.bind(this);
     }
   
   
@@ -55,6 +56,13 @@ export default class GameCanvas extends React.Component{
             const end = this.getGridCornerCoord(center, i+1);
             this.drawLine(canvasID, {x: start.x, y: start.y}, {x: end.x, y: end.y}, color, width);
         }
+    }
+    fillGrid(canvasID, center, color="teal"){
+        const ctx = canvasID.getContext("2d");
+        const topLeft = this.getGridCornerCoord(center, 0);
+        ctx.fillStyle = color;
+        ctx.fillRect(topLeft.x, topLeft.y, this.state.gridSize, this.state.gridSize)
+
     }
 
     getGridCornerCoord(center, i){
@@ -114,7 +122,15 @@ export default class GameCanvas extends React.Component{
         })
     }
 
+    handleDragStart(e){
+        console.log(e.target.textContent)
+        this.setState({
+            currentlyDraggedUnit: e.target.textContent
+        })
+
+    }
     handleMouseMove(e){
+        e.preventDefault()
         const {left, right, top, bottom} = this.state.canvasPosition;
         const offsetX = e.pageX - left;
         const offsetY = e.pageY - top;
@@ -123,15 +139,34 @@ export default class GameCanvas extends React.Component{
         this.setState({currentGrid: {q, r, x, y}})
     }
 
+
+    handleDrop(e)
+    {
+        const data = this.state.currentlyDraggedUnit;
+        const {q, r, x, y} = this.state.currentGrid;
+        this.fillGrid(this.canvasGrid, this.Point(x,y), "green");
+        this.drawGrid(this.canvasGrid, this.Point(x,y), "black");
+        const ctx = this.canvasGrid.getContext("2d");
+        ctx.fillStyle="black";
+        ctx.fillText(data, x-18, y);
+    }
     render () {
         return(
             <div>
                 <canvas ref={canvasGrid => this.canvasGrid = canvasGrid}></canvas>
-                <canvas ref={canvasCoordinates => this.canvasCoordinates = canvasCoordinates}
-                        onMouseMove = {this.handleMouseMove}
+                <canvas ref={canvasCoordinates => 
+                        this.canvasCoordinates = canvasCoordinates}
+                        onMouseMove = {this.handleMouseMove} 
+                        onDragOver = {this.handleMouseMove}
+                        onDrop = {this.handleDrop}
                 >
 
                 </canvas>
+                <div className="unit-selector">
+                    <div draggable="true" onDragStart={this.handleDragStart} className="unit">Unit 1</div>
+                    <div draggable="true"  onDragStart={this.handleDragStart} className="unit"> Unit 2</div>
+                    <div draggable="true"  onDragStart={this.handleDragStart} className="unit"> Unit 3</div>
+                </div>
             </div>
 
         )

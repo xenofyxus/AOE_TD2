@@ -11,3 +11,11 @@ canvas {
     left: 0;
     right: 0;
 }
+.unit-selector{
+    position: relative;
+    width: 100px;
+    height: 400px;
+}
+.unit{
+    position: auto
+}
