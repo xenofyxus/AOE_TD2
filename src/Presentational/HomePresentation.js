@@ -21,7 +21,7 @@ const HomePresentation=(props)=> {
       </div>
     </div>
     <div className="col my-auto">
-    <Link to='/game'>
+    <Link to='/info'>
       <button type="button" className="btn btn-success">I want to play!</button>
     </Link>
     </div>

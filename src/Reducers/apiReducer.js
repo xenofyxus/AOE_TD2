@@ -18,6 +18,12 @@ export function teamsReducer(state = initialState, action) {
             return {
                 ...state,
                 pending: false,
+                selectorList : action.teams.map(civ => 
+                    (
+                    {"value" : civ.id, 
+                    "label" : civ.name}
+                    )
+                    ),
                 teams: action.teams
             }
         case FETCH_TEAMS_ERROR:

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {getTeamsError, getTeams, getTeamsPending} from '../../Reducers/apiReducer';
-import {SELECT_TEAM, selectTeam} from '../../actions/gameActions';
+import {SELECT_TEAM, selectTeam, getUniqueUnit} from '../../actions/gameActions';
 import InfoPresentation from '../../Presentational/InfoPresentation';
 import fetchTeams from '../../actions/fetchTeams';
 import { gameReducer } from '../../Reducers/currentGameReducer';
@@ -33,15 +33,25 @@ class InfoContainer extends Component {
 
 const mapDispatchToProps = dispatch => {
     dispatch(fetchTeams())
-    return {selectedCivUpdate : (e) => {        
-        if(e !== null){
-            console.log(e.value)
-            return(dispatch(selectTeam(e.value)))
+        return {selectedCivUpdate : (e) => {        
+            if(e !== null){
+                console.log(e.value)
+                return(dispatch(selectTeam(e.value)))
+            }
+            else{
+                return(dispatch(selectTeam(null)))
+            }
+        },
+        uniqueUnitUpdate: (e) => {
+            if(e !== null){
+                return(dispatch(getUniqueUnit(e.value)))
+            }
+            else{
+                return null
+            }
         }
-        else{
-            return(dispatch(selectTeam(null)))
-        }
-    }}
+
+        }  
   }
 
 const mapStateToProps = state => (
