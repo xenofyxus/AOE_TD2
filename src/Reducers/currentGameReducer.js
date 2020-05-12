@@ -1,4 +1,4 @@
-import {SELECT_TEAM, START_GAME, FETCH_UNIT} from '../actions/gameActions';
+import {SELECT_TEAM, START_GAME} from '../actions/gameActions';
 import { act } from 'react-dom/test-utils';
 
 const initialState = {
@@ -28,11 +28,6 @@ export function gameReducer(state = initialState, action) {
                         
                 },
                 mapSpace : initializeMap()
-            }
-        case FETCH_UNIT:
-            return{
-                ...state,
-                unit3: action.uniqueUnitID
             }
         case START_GAME: 
             return{

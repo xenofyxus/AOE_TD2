@@ -24,17 +24,14 @@ const InfoPresentation = function(props){
               isSearchable={true}
               name="Teams"
               options={props.selectorList}
-              onChange={props.selectedCivUpdate}
+              onChange={props.selectedCivUpdate, props.uniqueUnitUpdate}
             />
           </div>
         </div>
     <div className="col my-5">
       <div className="media-body text-center my-5">
         <h5 className="mt-0">Unique Unit</h5>
-        <p>
-          {props.uniqueUnit}
-          
-
+        <p>     {props.uniqueUnit}
         </p>
       </div>
     </div>

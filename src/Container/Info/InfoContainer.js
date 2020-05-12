@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {getTeamsError, getTeams, getTeamsPending} from '../../Reducers/apiReducer';
-import {SELECT_TEAM, selectTeam, getUniqueUnit} from '../../actions/gameActions';
+import { selectTeam} from '../../actions/gameActions';
 import InfoPresentation from '../../Presentational/InfoPresentation';
-import fetchTeams from '../../actions/fetchTeams';
+import {fetchTeams, fetchUniqueUnit} from '../../actions/fetchTeams';
 import { gameReducer } from '../../Reducers/currentGameReducer';
 
 
@@ -42,9 +42,10 @@ const mapDispatchToProps = dispatch => {
                 return(dispatch(selectTeam(null)))
             }
         },
-        uniqueUnitUpdate: (e) => {
-            if(e !== null){
-                return(dispatch(getUniqueUnit(e.value)))
+        uniqueUnitUpdate: (url) => {
+            if(url !== null){
+                console.log("This is the url: " + url[0])
+                return(dispatch(fetchUniqueUnit(url[0])))
             }
             else{
                 return null
@@ -65,7 +66,8 @@ const mapStateToProps = state => (
                 )
                 ),
             selectedCiv : state.game.selectedTeamID,
-            uniqueUnit : getUnit(state)
+            uniqueUnitURL : getUnit(state),
+            uniqueUnit : state.unit3
             
         }
     )
@@ -74,7 +76,7 @@ const getUnit = (state) =>
             {
                 if(state.game.selectedTeamID !== null){
                     const civ = state.teams.teams[state.game.selectedTeamID]
-                    return (JSON.stringify(civ.unique_unit))
+                    return (JSON.stringify(civ.uniqueUnit))
                 }
                 else{
                     return "No team selected"

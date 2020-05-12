@@ -4,7 +4,6 @@ import {withRouter} from 'react-router-dom';
 
 
 import {SELECT_TEAM, selectTeam} from '../../actions/gameActions';
-import fetchTeams from '../../actions/fetchTeams';
 import GamePresentation from '../../Presentational/GamePresentation';
 import '../../styles/gameCanvas.css'
 import {GameConstants} from '../../GameEngine/GameConstants'
@@ -53,16 +52,6 @@ const getUnit = (state) =>
         }
 
 const mapDispatchToProps = dispatch => {
-        dispatch(fetchTeams())
-        return {selectedCivUpdate : (e) => {        
-                if(e !== null){
-                console.log(e.value)
-                return(dispatch(selectTeam(e.value)))
-                }
-                else{
-                return(dispatch(selectTeam(null)))
-                }
-        }}
         }
 
 const mapStateToProps = (state) => 
@@ -74,9 +63,6 @@ const mapStateToProps = (state) =>
         teams : state.teams.teams,
         selectedCiv : state.game.selectedTeamID,
         uniqueUnit : getUnit(state),
-        getUnit: getUnit,
-        fetchTeam: fetchTeams,
-        selectTeam: selectTeam
         }
         );
 

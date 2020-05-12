@@ -1,4 +1,6 @@
-import {FETCH_TEAMS_PENDING, FETCH_TEAMS_SUCCESS, FETCH_TEAMS_ERROR} from '../actions/apiActions';
+import {FETCH_TEAMS_PENDING, FETCH_TEAMS_SUCCESS, FETCH_TEAMS_ERROR, 
+    FETCH_UNIT_PENDING, FETCH_UNIT_BY_ID_SUCCESS, FETCH_UNIQUE_UNIT_SUCCESS, FETCH_UNIT_ERROR} from '../actions/apiActions';
+import { FETCH_UNIT } from '../actions/gameActions';
 
 const initialState = {
     pending: false,
@@ -25,6 +27,27 @@ export function teamsReducer(state = initialState, action) {
                     )
                     ),
                 teams: action.teams
+            }
+        case FETCH_UNIT_PENDING:
+            return {
+                ...state,
+                pending: true
+            }
+        case FETCH_UNIT_BY_ID_SUCCESS:
+            return{
+                ...state,
+                unit3: action.uniqueUnitID
+            }
+        case FETCH_UNIQUE_UNIT_SUCCESS:
+            return{
+                ...state,
+                unit3: action.uniqueUnitID
+            }
+        case FETCH_UNIT_ERROR:
+            return {
+                ...state,
+                pending: false,
+                error: action.data
             }
         case FETCH_TEAMS_ERROR:
             return {

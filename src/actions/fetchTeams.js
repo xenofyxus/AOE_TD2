@@ -1,7 +1,8 @@
-import {fetchTeamsPending, fetchTeamsSuccess, fetchTeamsError} from './apiActions';
+import {fetchTeamsPending, fetchTeamsSuccess, fetchTeamsError, fetchUniqueUnitSuccess, fetchUnitError,
+         fetchUnitByIDSuccess, fetchUnitPending} from './apiActions';
 import axios from 'axios';
 
-function fetchTeams() {
+export function fetchTeams() {
     const API_ENDPOINT = "https://us-central1-aoe-td2.cloudfunctions.net/API_PROXY"
     console.log("MAKING API CALL")
     return dispatch => {
@@ -22,11 +23,12 @@ function fetchTeams() {
         })
     }
 }
-function fetchUniqueUnit(url) {
+
+export function fetchUniqueUnit(url) {
     const API_ENDPOINT = "https://us-central1-aoe-td2.cloudfunctions.net/API_PROXY?url=" + url
     console.log("MAKING API CALL")
     return dispatch => {
-        dispatch(fetchTeamsPending());
+        dispatch(fetchUnitPending());
         axios.get(API_ENDPOINT)
         .then(res => {
             console.log("DISPATCHING FETCH UNIQUE UNIT SUCCESS")
@@ -35,14 +37,33 @@ function fetchUniqueUnit(url) {
                 throw(res.error);
             };
             console.log("RESULT: " + JSON.stringify(res))
-            return dispatch(fetchTeamsSuccess(res.data.civilizations));
+            return dispatch(fetchUniqueUnitSuccess(res.data));
         })
         .catch(error => {
             console.log("DISPATCHING ERROR")
-            dispatch(fetchTeamsError(error));
+            dispatch(fetchUnitError(error));
         })
     }
 }
 
-
-export default fetchTeams;
+export function fetchUnitByID(unitID) {
+    const API_ENDPOINT = "https://us-central1-aoe-td2.cloudfunctions.net/API_PROXY?unitID=" + unitID
+    console.log("MAKING API CALL")
+    return dispatch => {
+        dispatch(fetchUnitPending());
+        axios.get(API_ENDPOINT)
+        .then(res => {
+            console.log("DISPATCHING FETCH UNIQUE UNIT SUCCESS")
+            if(res.error) {
+                console.log("THROWING ERROR")
+                throw(res.error);
+            };
+            console.log("RESULT: " + JSON.stringify(res))
+            return dispatch(fetchUnitByIDSuccess(res.data));
+        })
+        .catch(error => {
+            console.log("DISPATCHING ERROR")
+            dispatch(fetchUnitError(error));
+        })
+    }
+}
