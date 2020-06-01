@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {getTeamsError, getTeams, getTeamsPending} from '../../Reducers/apiReducer';
-import { selectTeam} from '../../actions/gameActions';
+import { selectTeamAndUpdate} from '../../actions/gameActions';
 import InfoPresentation from '../../Presentational/InfoPresentation';
 import {fetchTeams, fetchUniqueUnit} from '../../actions/fetchTeams';
 import { gameReducer } from '../../Reducers/currentGameReducer';
@@ -31,44 +31,30 @@ class InfoContainer extends Component {
 
 
 
-const mapDispatchToProps = dispatch => {
+
+
+const mapDispatchToProps = (dispatch) => {
     dispatch(fetchTeams())
-        return {selectedCivUpdate : (e) => {        
-            if(e !== null){
-                console.log(e.value)
-                return(dispatch(selectTeam(e.value)))
+        return {selectedCivUpdate : (team) => { 
+            console.log('team', team)       
+            if(team !== null){
+                console.log(team)
+                return selectTeamAndUpdate(team, dispatch)
             }
             else{
-                return(dispatch(selectTeam(null)))
-            }
-        },
-        uniqueUnitUpdate: (url) => {
-            if(url !== null){
-                console.log("This is the url: " + url[0])
-                return(dispatch(fetchUniqueUnit(url[0])))
-            }
-            else{
-                return null
+                return selectTeamAndUpdate(null, dispatch)
             }
         }
-
-        }  
+        }
   }
 
 const mapStateToProps = state => (
         {
             pending : state.teams.pending,
             teams : state.teams.teams,
-            selectorList : state.teams.teams.map(civ => 
-                (
-                {"value" : civ.id, 
-                "label" : civ.name}
-                )
-                ),
+            selectorList : state.teams.selectorList ? state.teams.selectorList : [],
             selectedCiv : state.game.selectedTeamID,
-            uniqueUnitURL : getUnit(state),
-            uniqueUnit : state.unit3
-            
+            unit: state.teams.unit3            
         }
     )
 

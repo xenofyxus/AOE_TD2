@@ -10,9 +10,7 @@ const InfoPresentation = function(props){
     <div className="row text-center">
     <div className="col my-auto">
         <div className="form-group">
-            {
-              
-            }  
+            {console.log(props)}  
             <Select
               className="basic-single"
               classNamePrefix="select"
@@ -24,14 +22,14 @@ const InfoPresentation = function(props){
               isSearchable={true}
               name="Teams"
               options={props.selectorList}
-              onChange={props.selectedCivUpdate, props.uniqueUnitUpdate}
+              onChange={props.selectedCivUpdate} 
             />
           </div>
         </div>
     <div className="col my-5">
       <div className="media-body text-center my-5">
         <h5 className="mt-0">Unique Unit</h5>
-        <p>     {props.uniqueUnit}
+        <p>     {props.unit && props.unit.name}
         </p>
       </div>
     </div>
@@ -41,7 +39,6 @@ const InfoPresentation = function(props){
     </Link>
     </div>
     <div className="col">
-
     </div>
   </div>
 );

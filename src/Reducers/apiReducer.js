@@ -23,12 +23,14 @@ export function teamsReducer(state = initialState, action) {
                 selectorList : action.teams.map(civ => 
                     (
                     {"value" : civ.id, 
-                    "label" : civ.name}
+                    "label" : civ.name,
+                    "uniqueUnitUrl" : civ.unique_unit ? civ.unique_unit : null}
                     )
                     ),
+                
                 teams: action.teams
             }
-        case FETCH_UNIT_PENDING:
+        case FETCH_UNIT_PENDING:    
             return {
                 ...state,
                 pending: true
@@ -36,12 +38,13 @@ export function teamsReducer(state = initialState, action) {
         case FETCH_UNIT_BY_ID_SUCCESS:
             return{
                 ...state,
-                unit3: action.uniqueUnitID
+                [action.number]: action.uniqueUnitID
             }
         case FETCH_UNIQUE_UNIT_SUCCESS:
             return{
                 ...state,
-                unit3: action.uniqueUnitID
+                unit3: action.unit,
+                pending: false,
             }
         case FETCH_UNIT_ERROR:
             return {

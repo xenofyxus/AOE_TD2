@@ -24,6 +24,7 @@ export function fetchTeams() {
     }
 }
 
+
 export function fetchUniqueUnit(url) {
     const API_ENDPOINT = "https://us-central1-aoe-td2.cloudfunctions.net/API_PROXY?url=" + url
     console.log("MAKING API CALL")
@@ -36,8 +37,9 @@ export function fetchUniqueUnit(url) {
                 console.log("THROWING ERROR")
                 throw(res.error);
             };
-            console.log("RESULT: " + JSON.stringify(res))
-            return dispatch(fetchUniqueUnitSuccess(res.data));
+            const data = JSON.stringify(res);
+            const parsedRes = JSON.parse(JSON.stringify(res))
+            return dispatch(fetchUniqueUnitSuccess(parsedRes.data));
         })
         .catch(error => {
             console.log("DISPATCHING ERROR")
@@ -46,7 +48,7 @@ export function fetchUniqueUnit(url) {
     }
 }
 
-export function fetchUnitByID(unitID) {
+export function fetchUnitByID(unitID, number) {
     const API_ENDPOINT = "https://us-central1-aoe-td2.cloudfunctions.net/API_PROXY?unitID=" + unitID
     console.log("MAKING API CALL")
     return dispatch => {
@@ -59,7 +61,7 @@ export function fetchUnitByID(unitID) {
                 throw(res.error);
             };
             console.log("RESULT: " + JSON.stringify(res))
-            return dispatch(fetchUnitByIDSuccess(res.data));
+            return dispatch(fetchUnitByIDSuccess(res.data, number));
         })
         .catch(error => {
             console.log("DISPATCHING ERROR")

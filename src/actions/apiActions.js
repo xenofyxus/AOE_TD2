@@ -32,16 +32,17 @@ export function fetchUnitPending() {
     }
 }
 
-export function fetchUnitByIDSuccess(unit) {
+export function fetchUnitByIDSuccess(units, number) {
     return {
-        type: FETCH_TEAMS_SUCCESS,
-        unit: unit
+        type: FETCH_UNIT_BY_ID_SUCCESS,
+        units: units,
+        number: number,
     }
 }
 
 export function fetchUniqueUnitSuccess(unit) {
     return {
-        type: FETCH_TEAMS_SUCCESS,
+        type: FETCH_UNIQUE_UNIT_SUCCESS,
         unit: unit
     }
 }

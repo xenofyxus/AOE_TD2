@@ -24,6 +24,7 @@ export default class GameCanvas extends React.Component{
         this.canvasCoordinates.width = canvasWidth ;
         this.canvasCoordinates.height = canvasHeight; 
         this.getCanvasPosition(this.canvasCoordinates)
+        this.props.getUnits(this.props.unitIDs)
         this.drawGrids()
     }
     shouldComponentUpdate(nextProps, nextState){

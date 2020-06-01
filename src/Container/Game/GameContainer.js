@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-
+import {fetchUnitByID} from '../../actions/fetchTeams'
 
 import {SELECT_TEAM, selectTeam} from '../../actions/gameActions';
 import GamePresentation from '../../Presentational/GamePresentation';
@@ -40,8 +40,12 @@ function generateGridSpace (mapSpace){
         return mapComponents;
 }
 
-const getUnit = (state) => 
-        {
+const getUnits = (idArray, dispatch) => {idArray.map((unitId, index) => {
+        dispatch(fetchUnitByID(unitId, index + 1)    )})
+}
+        
+
+   /*     {
             if(state.game.selectedTeamID !== null){
                 const civ = state.teams.teams[state.game.selectedTeamID]
                 return (JSON.stringify(civ.unique_unit))
@@ -49,10 +53,11 @@ const getUnit = (state) =>
             else{
                 return "No team selected"
             }
-        }
+        }*/
 
-const mapDispatchToProps = dispatch => {
-        }
+const mapDispatchToProps = (dispatch) => {
+        return {getUnits: idArray => dispatch(getUnits(idArray, dispatch))}
+  }
 
 const mapStateToProps = (state) => 
         (
@@ -62,7 +67,8 @@ const mapStateToProps = (state) =>
         pending : state.teams.pending,
         teams : state.teams.teams,
         selectedCiv : state.game.selectedTeamID,
-        uniqueUnit : getUnit(state),
+        uniqueUnit : state.teams.unit3,
+        unitIDs: state.game.unitIDs
         }
         );
 
